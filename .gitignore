@@ -1,0 +1,6 @@
+# created by virtualenv automatically
+venv/
+__pycache__
+__pycache__/**/__pycache__
+.env
+src/models/model_finetuned1_10-0.98.tflite

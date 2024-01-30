@@ -2,24 +2,24 @@ import time
 import requests
 
 from fastapi import HTTPException
-import tensorflow as tf
-import cv2 as cv
-import numpy as np
+# import tensorflow as tf
+# import cv2 as cv
+# import numpy as np
 
 
 from src.config.constants import HEADERS, API_URL_MICROSOFT
 from src.utils.file_utils import FileUtils
 
 
-classes=['Bacterial', 'Hongos', 'Saludable', 'Hipersensibilidad']
+# classes=['Bacterial', 'Hongos', 'Saludable', 'Hipersensibilidad']
 
 
 
 class RecognitionService:
 
 
-  def __init__(self):
-    self.model = "./src/models/model_finetuned1_10-0.98.tflite"
+  # def __init__(self):
+    # self.model = "./src/models/model_finetuned1_10-0.98.tflite"
 
   
   def get_breed(self, image_url):
@@ -61,51 +61,51 @@ class RecognitionService:
   
   
 
-  def get_disease(self, image_url: str):
-    response_image = requests.get(image_url)
+  # def get_disease(self, image_url: str):
+  #   response_image = requests.get(image_url)
     
-    if response_image.status_code != 200:
-      raise HTTPException(status_code=404, detail="Error al descargar la imagen")
+  #   if response_image.status_code != 200:
+  #     raise HTTPException(status_code=404, detail="Error al descargar la imagen")
     
-    local_path = FileUtils.save_file(image_url, response_image.content)
+  #   local_path = FileUtils.save_file(image_url, response_image.content)
 
-    image_bytes = FileUtils.read_file(local_path)
+  #   image_bytes = FileUtils.read_file(local_path)
 
-     # Convertir los bytes de la imagen a un array numpy
-    nparr = np.frombuffer(image_bytes, np.uint8)
-    image = cv.imdecode(nparr, cv.IMREAD_COLOR)
+  #    # Convertir los bytes de la imagen a un array numpy
+  #   nparr = np.frombuffer(image_bytes, np.uint8)
+  #   image = cv.imdecode(nparr, cv.IMREAD_COLOR)
 
-    interpreter = tf.lite.Interpreter(model_path=self.model)
+  #   interpreter = tf.lite.Interpreter(model_path=self.model)
 
-    input_details = interpreter.get_input_details()
-    output_details = interpreter.get_output_details()
+  #   input_details = interpreter.get_input_details()
+  #   output_details = interpreter.get_output_details()
 
-    interpreter.allocate_tensors()
+  #   interpreter.allocate_tensors()
 
 
-    new_img = cv.resize(image, (224, 224))
-    new_img = new_img.astype(np.float32)
-    new_img = new_img / 255
+  #   new_img = cv.resize(image, (224, 224))
+  #   new_img = new_img.astype(np.float32)
+  #   new_img = new_img / 255
 
-    interpreter.set_tensor(input_details[0]['index'], [new_img])
+  #   interpreter.set_tensor(input_details[0]['index'], [new_img])
 
-    # run the inference
-    interpreter.invoke()
+  #   # run the inference
+  #   interpreter.invoke()
 
-    # output_details[0]['index'] = the index which provides the input
-    output_data = interpreter.get_tensor(output_details[0]['index'])
+  #   # output_details[0]['index'] = the index which provides the input
+  #   output_data = interpreter.get_tensor(output_details[0]['index'])
 
-    print(output_data)
+  #   print(output_data)
 
-    class_idx = np.argmax(output_data[0])
+  #   class_idx = np.argmax(output_data[0])
 
-    print(class_idx)
+  #   print(class_idx)
 
-    FileUtils.remove_file(local_path)
+  #   FileUtils.remove_file(local_path)
     
-    return {
-        'prediction': classes[class_idx],
-        'accuracy': round(output_data[0][class_idx] * 100)
-    }
+  #   return {
+  #       'prediction': classes[class_idx],
+  #       'accuracy': round(output_data[0][class_idx] * 100)
+  #   }
 
     

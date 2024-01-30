@@ -12,6 +12,6 @@ class RecognitionController:
     return breed_dog
 
 
-  def get_disease(self, image_url: str) -> dict:
-    disease_dog = self.recognition_service.get_disease(image_url)
-    return disease_dog
+  # def get_disease(self, image_url: str) -> dict:
+  #   disease_dog = self.recognition_service.get_disease(image_url)
+  #   return disease_dog

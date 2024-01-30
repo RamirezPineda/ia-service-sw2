@@ -1,6 +1,13 @@
 venv/
 __pycache__
 __pycache__/**/__pycache__
-.env
+.gitignore
+README.md
+
+src/models/model_finetuned1_10-0.98.tflite
+
+instalar-lfs.sh
+pull-lfs.sh
+.gitattributes
 .gitignore
 README.md

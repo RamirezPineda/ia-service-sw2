@@ -34,9 +34,9 @@ def get_breed_by_name(name: str):
   return breedController.get_breed_by_name(name)
 
 
-@router.post("/recognition/disease", tags=["Disease Recognition"])
-def get_disease(image: Image):
-  return controller.get_disease(image.image_url)
+# @router.post("/recognition/disease", tags=["Disease Recognition"])
+# def get_disease(image: Image):
+#   return controller.get_disease(image.image_url)
 
 
 # @router.post("/recognition/skin_disease", tags=["Skin Disease Recognition"])
